@@ -25,7 +25,7 @@
     /* Dynamic spacing calculations */
     --vh: 1vh;  /* Will be updated by JS */
     --header-height: 4rem;
-    --footer-height: 6rem;
+    --footer-height: 4rem;
     --main-padding: 2rem;
 }
 

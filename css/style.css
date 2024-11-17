@@ -42,14 +42,15 @@ body {
     max-width: var(--content-max-width);
     padding: var(--spacing-unit);
     transition: background-color 0.3s ease, color 0.3s ease;
-    min-height: 100dvh;
+    min-height: 100%;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    min-height: inherit;
+    min-height: calc(100vh - 2 * var(--spacing-unit));
     width: 100%;
+    margin: 0;
 }
 
 .content {
@@ -106,6 +107,8 @@ a:hover {
     border: 1px solid var(--border-color);
     padding: var(--spacing-unit);
     background: var(--bg-color);
+    max-height: none;
+    overflow: visible;
 }
 
 .terminal-frame::before {

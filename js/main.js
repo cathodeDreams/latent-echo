@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.setAttribute('aria-pressed', 'false');
     themeToggle.innerHTML = '◐';
     
+    // Find footer content and append theme toggle
+    const footerContent = document.querySelector('.footer-content');
+    footerContent.appendChild(themeToggle);
+    
     // Check system preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     const storedTheme = localStorage.getItem('theme');
@@ -27,8 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', newTheme);
         updateThemeToggle(newTheme === 'dark');
     });
-    
-    document.body.appendChild(themeToggle);
     
     // Add viewport height calculation
     function setVHProperty() {

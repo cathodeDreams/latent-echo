@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}Latent Echo</title>
+    <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+</head>
+<body>
+    {% include header.html %}
+    {{ content }}
+</body>
+</html> 

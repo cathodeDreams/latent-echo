@@ -5,16 +5,21 @@
     --viral-mint: #C4E3D4;
     --tissue-pink: #FFE5EC;
     --spore-gray: #9BA0A3;
-    --neon-moss: #7FFF00;
+    --neon-moss: #4B9900;
     
-    /* Additional theme colors */
-    --light-void: #F2F2F3;
+    /* Additional theme colors from README */
+    --light-void: #E5E7E8;     /* Using Light Spore for less bright background */
+    --dark-void: #0D0E0E;      /* Darker background from README */
+    --dark-spore: #4D5052;     /* From README */
+    --dark-lavender: #9B87AB;  /* From README */
+    --shadow-mint: #7A9B89;    /* From README */
     
-    /* Theme mappings */
+    /* Theme mappings for light mode */
     --bg-color: var(--light-void);
     --text-color: var(--fungal-black);
-    --link-color: var(--spore-gray);
-    --accent-color: var(--fungal-black);
+    --link-color: var(--dark-spore);
+    --accent-color: var(--spore-gray);
+    --border-color: var(--dark-spore);
     --max-width: min(65ch, 100% - 4rem);
     
     /* Dynamic spacing calculations */
@@ -25,11 +30,11 @@
 }
 
 [data-theme="dark"] {
-    --bg-color: var(--fungal-black);
-    --text-color: var(--bio-lavender);
-    --link-color: var(--viral-mint);
-    --accent-color: var(--spore-gray);
-    --border-color: var(--spore-gray);
+    --bg-color: var(--dark-void);        /* Using darker background */
+    --text-color: var(--dark-lavender);  /* Using muted purple */
+    --link-color: var(--shadow-mint);    /* Using muted green */
+    --accent-color: var(--dark-spore);   /* Using darker gray */
+    --border-color: var(--dark-spore);   /* Using darker border */
 }
 
 body {
@@ -87,17 +92,16 @@ a:hover {
 }
 
 .theme-toggle {
-    position: absolute;
-    top: 1rem;
-    right: 0;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
     background: transparent;
-    border: 1px solid var(--text-color);
+    border: none;
     color: var(--text-color);
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 2px;
     cursor: pointer;
-    opacity: 0.6;
+    opacity: 0.4;
     transition: all 0.3s ease;
     z-index: 100;
     font-size: 1.2rem;
@@ -106,8 +110,6 @@ a:hover {
 
 .theme-toggle:hover {
     opacity: 0.8;
-    border-color: var(--accent-color);
-    color: var(--accent-color);
     transform: scale(1.05);
 }
 
@@ -200,7 +202,7 @@ footer {
 
 .terminal-frame {
     position: relative;
-    border: 1px solid var(--neon-moss);
+    border: 1px solid var(--border-color);
     padding: 2rem;
     margin: 0;
     overflow: visible;
@@ -215,7 +217,7 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    border: 1px solid var(--neon-moss);
+    border: 1px solid var(--border-color);
     pointer-events: none;
 }
 

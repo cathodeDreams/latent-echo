@@ -45,7 +45,7 @@ body {
     line-height: 1.7;
     margin: 0 auto;
     max-width: var(--max-width);
-    padding: var(--main-padding);
+    padding: 1rem;
     transition: background-color 0.3s ease, color 0.3s ease;
     min-height: 100vh;
 }
@@ -135,10 +135,10 @@ footer {
 
 .nav-header {
     width: 100%;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
     position: relative;
     height: auto;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     background: none;
     border-bottom: none;
 }
@@ -187,7 +187,7 @@ footer {
 .content {
     flex: 1 0 auto;
     width: 100%;
-    padding: 2rem 0;
+    padding: 1rem 0;
 }
 
 .terminal-container {
@@ -199,7 +199,7 @@ footer {
 .terminal-frame {
     position: relative;
     border: 1px solid var(--border-color);
-    padding: 2rem;
+    padding: 1.5rem;
     margin: 0;
     background: var(--bg-color);
 }
@@ -217,7 +217,7 @@ footer {
 
 @media (max-width: 768px) {
     body {
-        padding: 1rem;
+        padding: 0.75rem;
     }
     
     .terminal-frame {
@@ -225,7 +225,7 @@ footer {
     }
     
     .content {
-        padding: 1rem 0;
+        padding: 0.75rem 0;
     }
 }
 

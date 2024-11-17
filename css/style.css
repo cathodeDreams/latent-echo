@@ -11,7 +11,7 @@
     --bg-color: var(--light-void, #F2F2F3);
     --text-color: var(--fungal-black);
     --link-color: var(--dark-lavender, #9B87AB);
-    --accent-color: var(--neon-moss);
+    --accent-color: var(--spore-gray);
     --max-width: 65ch;
 }
 
@@ -25,8 +25,9 @@
 body {
     background: var(--bg-color);
     color: var(--text-color);
-    font-family: 'JetBrains Mono', 'Space Mono', monospace;
-    line-height: 1.6;
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 15px;
+    line-height: 1.7;
     margin: 0 auto;
     max-width: var(--max-width);
     padding: 2rem 1rem;
@@ -34,29 +35,45 @@ body {
 }
 
 h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    letter-spacing: -0.03em;
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 3rem;
+    letter-spacing: 0.05em;
     color: var(--accent-color);
+    opacity: 0.9;
 }
 
-.manifesto p {
+.prose {
+    max-width: 65ch;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    line-height: 1.7;
+}
+
+.prose__section {
+    margin-bottom: 3rem;
+}
+
+.prose__section p {
     margin-bottom: 1.5rem;
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    opacity: 0.95;
+    font-weight: 300;
 }
 
 a {
     color: var(--link-color);
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    opacity: 0.8;
 }
 
 a:hover {
     color: var(--accent-color);
     border-bottom-color: var(--accent-color);
+    opacity: 1;
 }
 
 .theme-toggle {
@@ -66,48 +83,45 @@ a:hover {
     background: transparent;
     border: 1px solid var(--text-color);
     color: var(--text-color);
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 2px;
     cursor: pointer;
-    opacity: 0.6;
-    transition: all 0.2s ease;
+    opacity: 0.4;
+    transition: all 0.3s ease;
     z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding: 0;
 }
 
 .theme-toggle:hover {
-    opacity: 1;
+    opacity: 0.8;
     border-color: var(--accent-color);
     color: var(--accent-color);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 footer {
-    margin-top: 4rem;
+    margin-top: 6rem;
     padding-top: 2rem;
     border-top: 1px solid var(--accent-color);
-    opacity: 0.8;
-    font-family: 'JetBrains Mono', 'Space Mono', monospace;
-    font-size: 0.9rem;
+    opacity: 0.7;
+    font-size: 0.8rem;
 }
 
 .footer-content {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 1rem;
 }
 
 .footer-meta {
     color: var(--text-color);
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .footer-legal {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-color);
-    opacity: 0.6;
+    opacity: 0.5;
 } 

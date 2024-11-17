@@ -23,6 +23,7 @@
     --text-color: var(--bio-lavender);
     --link-color: var(--viral-mint);
     --accent-color: var(--neon-moss);
+    --border-color: var(--neon-moss);
 }
 
 body {
@@ -43,10 +44,8 @@ h1:not(.nav-title) {
 }
 
 .prose {
-    max-width: 65ch;
-    margin: 4rem auto;
-    padding: 0 1.5rem;
-    line-height: 1.7;
+    margin: 0;
+    padding: 0;
 }
 
 .prose__section {
@@ -156,4 +155,30 @@ footer {
     font-weight: 400;
     letter-spacing: 0.05em;
     margin: 0;
-} 
+}
+
+.terminal-container {
+    position: relative;
+    margin: 2rem auto;
+    max-width: 65ch;
+    padding: 2rem;
+}
+
+.terminal-frame {
+    position: relative;
+    border: 1px solid var(--neon-moss);
+    padding: 2rem;
+    margin: 0;
+    overflow: hidden;
+}
+
+.terminal-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid var(--neon-moss);
+    pointer-events: none;
+}

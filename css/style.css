@@ -7,12 +7,15 @@
     --spore-gray: #9BA0A3;
     --neon-moss: #7FFF00;
     
-    /* Light theme */
-    --bg-color: var(--light-void, #F2F2F3);
+    /* Additional theme colors */
+    --light-void: #F2F2F3;
+    
+    /* Theme mappings */
+    --bg-color: var(--light-void);
     --text-color: var(--fungal-black);
-    --link-color: var(--dark-lavender, #9B87AB);
+    --link-color: var(--bio-lavender);
     --accent-color: var(--spore-gray);
-    --max-width: 65ch;
+    --max-width: 1200px;
 }
 
 [data-theme="dark"] {

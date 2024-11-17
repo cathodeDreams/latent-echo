@@ -60,11 +60,11 @@ h1:not(.nav-title) {
 }
 
 .prose__section {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .prose__section:last-child {
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
 }
 
 .prose__section p {
@@ -112,7 +112,7 @@ a:hover {
 
 footer {
     width: 100%;
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
     border-top: 1px solid var(--accent-color);
     margin-top: auto;
 }
@@ -191,7 +191,7 @@ footer {
 .content {
     flex: 1 0 auto;
     width: 100%;
-    padding: 1rem 0 0 0;
+    padding: 1rem 0 0.5rem 0;
 }
 
 .terminal-container {
@@ -204,7 +204,7 @@ footer {
     position: relative;
     border: 1px solid var(--border-color);
     padding: 1.5rem;
-    margin: 0 0 1rem 0;
+    margin: 0;
     background: var(--bg-color);
 }
 

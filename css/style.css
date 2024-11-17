@@ -16,6 +16,12 @@
     --link-color: var(--spore-gray);
     --accent-color: var(--fungal-black);
     --max-width: min(65ch, 100% - 2rem);
+    
+    /* Dynamic spacing calculations */
+    --vh: 1vh;  /* Will be updated by JS */
+    --header-height: 4rem;
+    --footer-height: 6rem;
+    --main-padding: 2rem;
 }
 
 [data-theme="dark"] {
@@ -34,12 +40,14 @@ body {
     line-height: 1.7;
     margin: 0 auto;
     max-width: var(--max-width);
-    padding: 1rem;
+    padding: var(--main-padding);
     transition: background-color 0.3s ease, color 0.3s ease;
     padding-top: 2rem;
-    min-height: 100vh;
+    min-height: calc(var(--vh) * 100);
+    height: calc(var(--vh) * 100);
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 h1:not(.nav-title) {
@@ -169,9 +177,10 @@ footer {
 }
 
 .terminal-container {
-    margin: 2rem 0;
+    margin: 0;
     padding: 0;
-    flex-grow: 1;
+    flex: 1 1 auto;
+    min-height: 0;  /* Allows container to shrink if needed */
     display: flex;
     align-items: center;
 }
@@ -182,6 +191,8 @@ footer {
     padding: 1.5rem;
     margin: 0;
     overflow: hidden;
+    max-height: calc(var(--vh) * 100 - var(--header-height) - var(--footer-height) - (var(--main-padding) * 2));
+    overflow-y: auto;  /* Allow scrolling within frame if needed */
 }
 
 .terminal-frame::before {
@@ -206,5 +217,21 @@ footer {
     
     .nav-title {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-height: 600px) {
+    :root {
+        --header-height: 3rem;
+        --footer-height: 4rem;
+        --main-padding: 1rem;
+    }
+    
+    .prose__section {
+        margin-bottom: 1rem;
+    }
+    
+    .prose__section p {
+        margin-bottom: 0.75rem;
     }
 }

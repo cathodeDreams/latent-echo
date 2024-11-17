@@ -29,4 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     document.body.appendChild(themeToggle);
+    
+    // Add viewport height calculation
+    function setVHProperty() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    // Set initial value
+    setVHProperty();
+    
+    // Update on resize and orientation change
+    ['resize', 'orientationchange'].forEach(evt => 
+        window.addEventListener(evt, () => {
+            setVHProperty();
+        })
+    );
 }); 

@@ -47,12 +47,7 @@ body {
     max-width: var(--max-width);
     padding: var(--main-padding);
     transition: background-color 0.3s ease, color 0.3s ease;
-    padding-top: 2rem;
     min-height: 100vh;
-    height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    overflow: hidden;
 }
 
 h1:not(.nav-title) {
@@ -115,11 +110,9 @@ a:hover {
 
 footer {
     width: 100%;
-    margin-top: 0;
     padding: 1rem 0;
     border-top: 1px solid var(--accent-color);
-    opacity: 0.7;
-    font-size: 0.8rem;
+    margin-top: auto;
 }
 
 .footer-content {
@@ -182,16 +175,19 @@ footer {
 }
 
 .container {
-    width: var(--max-width);
+    width: 100%;
+    max-width: var(--max-width);
     margin: 0 auto;
-    padding: var(--main-padding);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    flex: 1 0 auto;
+    width: 100%;
+    padding: 2rem 0;
 }
 
 .terminal-container {
@@ -205,9 +201,7 @@ footer {
     border: 1px solid var(--border-color);
     padding: 2rem;
     margin: 0;
-    overflow: visible;
-    max-height: none;
-    overflow-y: visible;
+    background: var(--bg-color);
 }
 
 .terminal-frame::before {
@@ -230,8 +224,8 @@ footer {
         padding: 1rem;
     }
     
-    .nav-title {
-        font-size: 1.5rem;
+    .content {
+        padding: 1rem 0;
     }
 }
 

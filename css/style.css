@@ -15,7 +15,7 @@
     --text-color: var(--fungal-black);
     --link-color: var(--spore-gray);
     --accent-color: var(--fungal-black);
-    --max-width: min(65ch, 100% - 2rem);
+    --max-width: min(65ch, 100% - 4rem);
     
     /* Dynamic spacing calculations */
     --vh: 1vh;  /* Will be updated by JS */
@@ -43,11 +43,11 @@ body {
     padding: var(--main-padding);
     transition: background-color 0.3s ease, color 0.3s ease;
     padding-top: 2rem;
-    min-height: calc(var(--vh) * 100);
-    height: calc(var(--vh) * 100);
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
+    min-height: 100vh;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
 }
 
 h1:not(.nav-title) {
@@ -112,8 +112,9 @@ a:hover {
 }
 
 footer {
-    margin-top: 2rem;
-    padding-top: 1rem;
+    width: 100%;
+    margin-top: 0;
+    padding: 1rem 0;
     border-top: 1px solid var(--accent-color);
     opacity: 0.7;
     font-size: 0.8rem;
@@ -138,6 +139,8 @@ footer {
 }
 
 .nav-header {
+    width: 100%;
+    padding: 1rem 0;
     position: relative;
     height: auto;
     margin-bottom: 2rem;
@@ -176,23 +179,33 @@ footer {
     border-bottom: none;
 }
 
-.terminal-container {
-    margin: 0;
-    padding: 0;
-    flex: 1 1 auto;
-    min-height: 0;  /* Allows container to shrink if needed */
+.container {
+    width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--main-padding);
+}
+
+.content {
     display: flex;
     align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.terminal-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .terminal-frame {
     position: relative;
     border: 1px solid var(--neon-moss);
-    padding: 1.5rem;
+    padding: 2rem;
     margin: 0;
-    overflow: hidden;
-    max-height: calc(var(--vh) * 100 - var(--header-height) - var(--footer-height) - (var(--main-padding) * 2));
-    overflow-y: auto;  /* Allow scrolling within frame if needed */
+    overflow: visible;
+    max-height: none;
+    overflow-y: visible;
 }
 
 .terminal-frame::before {
@@ -220,7 +233,7 @@ footer {
     }
 }
 
-@media (max-height: 600px) {
+@media (max-height: 700px) {
     :root {
         --header-height: 3rem;
         --footer-height: 4rem;
@@ -232,6 +245,12 @@ footer {
     }
     
     .prose__section p {
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .terminal-frame {
+        padding: 1rem;
     }
 }

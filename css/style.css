@@ -35,6 +35,7 @@ body {
     max-width: var(--max-width);
     padding: 2rem 1rem;
     transition: background-color 0.3s ease, color 0.3s ease;
+    padding-top: 4rem;
 }
 
 h1 {
@@ -127,4 +128,40 @@ footer {
     font-size: 0.75rem;
     color: var(--text-color);
     opacity: 0.5;
+}
+
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-logo {
+    width: 24px;
+    height: 24px;
+    color: var(--text-color);
+}
+
+.nav-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
 } 

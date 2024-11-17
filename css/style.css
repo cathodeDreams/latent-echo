@@ -35,16 +35,11 @@ body {
     max-width: var(--max-width);
     padding: 2rem 1rem;
     transition: background-color 0.3s ease, color 0.3s ease;
-    padding-top: 4rem;
+    padding-top: 120px;
 }
 
 h1 {
-    font-size: 1.8rem;
-    font-weight: 400;
-    margin-bottom: 3rem;
-    letter-spacing: 0.05em;
-    color: var(--accent-color);
-    opacity: 0.9;
+    display: none;
 }
 
 .prose {
@@ -135,33 +130,38 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-    background-color: rgba(18, 18, 18, 0.95);
-    backdrop-filter: blur(10px);
+    height: 100px;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--accent-color);
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-container {
-    max-width: 1200px;
+    height: 100%;
+    max-width: var(--max-width);
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .nav-logo {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     color: var(--text-color);
 }
 
 .nav-title {
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-color);
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--accent-color);
+    opacity: 0.9;
+    letter-spacing: 0.05em;
 } 

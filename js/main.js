@@ -53,13 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const timeElement = document.querySelector('#last-updated time');
         if (timeElement) {
             const lastMod = new Date(document.lastModified);
-            const dateString = lastMod.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
+            const dateString = lastMod.toISOString().split('T')[0];
             timeElement.textContent = dateString;
-            timeElement.setAttribute('datetime', lastMod.toISOString().split('T')[0]);
+            timeElement.setAttribute('datetime', dateString);
         }
     }
     

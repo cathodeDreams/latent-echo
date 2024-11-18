@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateLastModified() {
         const timeElement = document.querySelector('#last-updated time');
         if (timeElement) {
-            const lastMod = new Date(document.lastModified);
-            const dateString = lastMod.toISOString().split('T')[0];
+            const now = new Date();
+            const dateString = now.toISOString().split('T')[0];
             timeElement.textContent = dateString;
             timeElement.setAttribute('datetime', dateString);
         }

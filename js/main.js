@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.className = 'theme-toggle';
     themeToggle.setAttribute('aria-label', 'Toggle dark mode');
     themeToggle.setAttribute('aria-pressed', 'false');
-    themeToggle.innerHTML = '◐';
+    themeToggle.innerHTML = '◑';
     
     // Find footer content and append theme toggle
     const footerContent = document.querySelector('.footer-content');

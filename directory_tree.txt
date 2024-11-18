@@ -1,5 +1,5 @@
 Directory Tree
-Generated: 2024-11-17 16:56:56
+Generated: 2024-11-17 19:58:59
 ==================================================
 
 C:\Users\cathode\Dreams\latent-echo
@@ -8,10 +8,15 @@ C:\Users\cathode\Dreams\latent-echo
 ├── css
 │   └── style.css
 ├── img
+│   ├── android-chrome-192.png
+│   ├── apple-touch-icon.png
 │   ├── favicon.png
+│   ├── logo.png
+│   ├── logo.svg
 │   └── necrotic-bloom-favicon-2.svg
 ├── js
 │   └── main.js
 ├── _headers
 ├── index.html
-└── README.md
+├── README.md
+└── reframed-squares-4.svg

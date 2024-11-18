@@ -350,4 +350,13 @@ footer {
     align-items: center;
     padding: 2rem 0;
     margin: 1rem 0;
+    background: transparent;
+    min-height: 50px;
+}
+
+.support-container iframe {
+    border: none;
+    background: transparent !important;
+    min-height: 50px;
+    min-width: 200px;
 }

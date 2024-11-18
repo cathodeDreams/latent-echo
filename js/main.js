@@ -47,4 +47,22 @@ document.addEventListener('DOMContentLoaded', () => {
             setVHProperty();
         })
     );
+    
+    // Update last modified date
+    function updateLastModified() {
+        const timeElement = document.querySelector('#last-updated time');
+        if (timeElement) {
+            const lastMod = new Date(document.lastModified);
+            const dateString = lastMod.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            timeElement.textContent = dateString;
+            timeElement.setAttribute('datetime', lastMod.toISOString().split('T')[0]);
+        }
+    }
+    
+    // Call it after DOM is loaded
+    updateLastModified();
 }); 

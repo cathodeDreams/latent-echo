@@ -12,7 +12,7 @@
     
     /* Dynamic spacing */
     --spacing-unit: clamp(0.75rem, 2vw, 1rem);
-    --header-height: clamp(3rem, 4vh, 4rem);
+    --header-height: clamp(2rem, 3vh, 2.5rem);
     --footer-height: clamp(3rem, 4vh, 4rem);
     --content-max-width: min(65ch, 100% - 4rem);
     
@@ -62,27 +62,41 @@ body {
     padding: calc(var(--spacing-unit) / 2) 0;
 }
 
-/* Logo styles */
-.nav-link {
-    display: flex;
+/* Navigation and Logo */
+.nav-header {
+    padding: calc(var(--spacing-unit) / 2) 0;
+    margin-bottom: 0;
+}
+
+.site-title {
+    display: inline-flex;
     align-items: center;
-    height: var(--header-height);
+    gap: 0.5rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    border-bottom: none;
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+}
+
+.site-title:hover {
+    opacity: 1;
     border-bottom: none;
 }
 
 .nav-logo {
-    height: calc(var(--header-height) * 0.75);
+    height: var(--header-height);
     width: auto;
-    opacity: 0.85;
-    transition: opacity 0.3s ease, filter 0.3s ease;
+    display: block;
 }
 
-.nav-logo:hover {
-    opacity: 1;
-}
-
-[data-theme="dark"] .nav-logo {
-    filter: brightness(0.9) contrast(1.1);
+.nav-title {
+    color: inherit;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 0;
+    line-height: 1;
 }
 
 /* Typography */
@@ -105,23 +119,6 @@ body {
     opacity: 0.95;
     font-weight: 300;
     line-height: 1.6;
-}
-
-/* Navigation */
-.nav-header {
-    padding: calc(var(--spacing-unit) / 2) 0;
-    margin-bottom: 0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.nav-title {
-    color: var(--accent-color);
-    font-size: clamp(1.5rem, 3vw, 1.75rem);
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    margin: 0;
 }
 
 /* Links */
@@ -184,9 +181,5 @@ footer {
     .footer-content {
         flex-direction: column;
         align-items: flex-start;
-    }
-    
-    .nav-header {
-        flex-wrap: wrap;
     }
 }

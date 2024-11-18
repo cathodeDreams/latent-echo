@@ -1,5 +1,5 @@
 :root {
-    /* Core theme colors */
+    /* Core theme colors show clear semantic meaning */
     --fungal-black: #1A1B1C;
     --bio-lavender: #E6D7F3;
     --dark-lavender: #9B87AB;
@@ -12,6 +12,8 @@
     
     /* Dynamic spacing */
     --spacing-unit: clamp(0.75rem, 2vw, 1rem);
+    --spacing-large: calc(var(--spacing-unit) * 2);
+    --spacing-xl: calc(var(--spacing-unit) * 4);
     --header-height: clamp(2rem, 3vh, 2.5rem);
     --footer-height: clamp(3rem, 4vh, 4rem);
     --content-max-width: min(65ch, 100% - 4rem);
@@ -116,7 +118,7 @@ body {
 .prose__section p {
     margin-bottom: var(--spacing-unit);
     color: var(--text-color);
-    opacity: 0.95;
+    opacity: 0.98;
     font-weight: 300;
     line-height: 1.6;
 }
@@ -195,7 +197,7 @@ footer {
     height: 2rem;
     padding: 0;
     opacity: 0.85;
-    transition: all 0.3s ease;
+    transition: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,4 +229,9 @@ footer {
 
 .theme-toggle:hover::before {
     opacity: 0.7;
+}
+
+:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }

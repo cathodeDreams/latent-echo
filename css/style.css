@@ -343,3 +343,11 @@ footer {
     object-fit: contain;
     color: var(--logo-color);
 }
+
+.support-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    margin: 1rem 0;
+}

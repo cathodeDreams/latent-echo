@@ -1,0 +1,17 @@
+Directory Tree
+Generated: 2024-11-17 16:56:56
+==================================================
+
+C:\Users\cathode\Dreams\latent-echo
+├── _includes
+├── _layouts
+├── css
+│   └── style.css
+├── img
+│   ├── favicon.png
+│   └── necrotic-bloom-favicon-2.svg
+├── js
+│   └── main.js
+├── _headers
+├── index.html
+└── README.md

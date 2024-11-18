@@ -253,3 +253,93 @@ footer {
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }
+
+/* Landing page specific styles */
+.landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.landing-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl) 0;
+}
+
+.branding {
+    max-width: min(80vw, 800px);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.hero-logo {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+}
+
+.main-nav ul {
+    display: flex;
+    gap: var(--spacing-large);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.main-nav a {
+    font-size: 1.2rem;
+    padding: 0.5em 1em;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.main-nav a:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    border-color: var(--accent-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .main-nav a {
+        width: 200px;
+        text-align: center;
+        display: block;
+    }
+}
+
+/* Add these rules to the existing CSS */
+.main-nav a.inactive {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--border-color);
+    pointer-events: none;
+}
+
+.main-nav a.inactive:hover {
+    background: transparent;
+    color: var(--text-color);
+}
+
+/* Add this to ensure SVG inherits theme colors properly */
+.hero-logo {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    object-fit: contain;
+    color: var(--logo-color);
+}

@@ -15,8 +15,10 @@ C:\Users\cathode\Dreams\latent-echo
 │   ├── logo.svg
 │   └── necrotic-bloom-favicon-2.svg
 ├── js
+│   ├── config.js
 │   └── main.js
 ├── _headers
 ├── index.html
-├── README.md
-└── reframed-squares-4.svg
+├── pages
+│   └── about.html
+└── README.md

@@ -1,11 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Environment:', {
-        hostname: window.location.hostname,
-        protocol: window.location.protocol,
-        configPresent: typeof CONFIG !== 'undefined',
-        pinHash: CONFIG?.PIN_HASH?.substring(0, 8) + '...' // Log first 8 chars only
-    });
-    
     const themeToggle = document.createElement('button');
     themeToggle.className = 'theme-toggle';
     themeToggle.setAttribute('aria-label', 'Toggle dark mode');
@@ -69,9 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Call it after DOM is loaded
     updateLastModified();
     
-    // PIN verification system
+    // Pin verification system
     let pinBuffer = '';
-    
+    let pinTimeout;
+
     async function sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
         const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -79,52 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         return hashHex;
     }
-
-    // Create chat interface
-    function createChatInterface() {
-        const chatModal = document.createElement('div');
-        chatModal.className = 'chat-modal';
-        
-        const chatContainer = document.createElement('div');
-        chatContainer.className = 'chat-container';
-        
-        const chatHistory = document.createElement('div');
-        chatHistory.className = 'chat-history';
-        
-        const inputContainer = document.createElement('div');
-        inputContainer.className = 'chat-input-container';
-        
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'chat-input';
-        input.placeholder = 'Type your message...';
-        
-        const sendButton = document.createElement('button');
-        sendButton.className = 'chat-send';
-        sendButton.textContent = '→';
-
-        const modelInfo = document.createElement('div');
-        modelInfo.className = 'model-info';
-        modelInfo.innerHTML = `
-            <span>Model: Qwen2.5-14B</span>
-            <button class="clear-button">Clear Chat</button>
-        `;
-        
-        inputContainer.appendChild(input);
-        inputContainer.appendChild(sendButton);
-        
-        chatContainer.appendChild(chatHistory);
-        chatContainer.appendChild(inputContainer);
-        chatContainer.appendChild(modelInfo);
-        chatModal.appendChild(chatContainer);
-        
-        document.body.appendChild(chatModal);
-        
-        return { chatModal, chatHistory, input, sendButton, modelInfo };
-    }
-
-    // Initialize chat interface
-    const { chatModal, chatHistory, input, sendButton, modelInfo } = createChatInterface();
 
     // PIN Modal functionality
     const terminalButton = document.getElementById('terminal-access');
@@ -152,10 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
             clearPin();
         });
         
-        const header = document.createElement('div');
-        header.className = 'pin-header';
-        header.textContent = 'Enter PIN';
-        
         const display = document.createElement('div');
         display.className = 'pin-display';
         for (let i = 0; i < 4; i++) {
@@ -167,65 +111,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const keypad = document.createElement('div');
         keypad.className = 'pin-keypad';
         
-        // Add number keys with touch-friendly design
+        // Add number keys
         for (let i = 1; i <= 9; i++) {
-            const key = createPinKey(i.toString());
+            const key = document.createElement('button');
+            key.className = 'pin-key';
+            key.textContent = i;
+            key.addEventListener('click', () => handlePinInput(i.toString()));
             keypad.appendChild(key);
         }
         
         // Add 0 key
-        const zeroKey = createPinKey('0');
+        const zeroKey = document.createElement('button');
+        zeroKey.className = 'pin-key';
+        zeroKey.textContent = '0';
         zeroKey.style.gridColumn = '2';
+        zeroKey.addEventListener('click', () => handlePinInput('0'));
         keypad.appendChild(zeroKey);
         
-        // Add backspace key
-        const backKey = createPinKey('←', () => {
-            pinBuffer = pinBuffer.slice(0, -1);
-            updatePinDisplay();
-        });
-        backKey.style.gridColumn = '3';
-        keypad.appendChild(backKey);
-        
         container.appendChild(closeBtn);
-        container.appendChild(header);
         container.appendChild(display);
         container.appendChild(keypad);
         modal.appendChild(container);
         
         return modal;
-    }
-
-    function createPinKey(text, customHandler) {
-        const key = document.createElement('button');
-        key.className = 'pin-key';
-        key.textContent = text;
-        
-        // Prevent default touch behavior
-        key.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            key.classList.add('active');
-        });
-        
-        key.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            key.classList.remove('active');
-            if (customHandler) {
-                customHandler();
-            } else if (pinBuffer.length < 4) {
-                handlePinInput(text);
-            }
-        });
-        
-        // Keep mouse events for desktop
-        key.addEventListener('click', (e) => {
-            if (e.pointerType !== 'touch' && !customHandler) {
-                if (pinBuffer.length < 4) {
-                    handlePinInput(text);
-                }
-            }
-        });
-        
-        return key;
     }
 
     function handlePinInput(digit) {
@@ -250,8 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (hashedInput === CONFIG.PIN_HASH) {
             modal.classList.remove('active');
-            chatModal.classList.add('active');
-            input.focus();
+            window.location.href = '/pages/chat.html';
         } else {
             // Wrong PIN animation
             modal.classList.add('error');
@@ -266,67 +173,4 @@ document.addEventListener('DOMContentLoaded', () => {
         pinBuffer = '';
         updatePinDisplay();
     }
-
-    // Handle chat submission
-    async function handleChatSubmit() {
-        const message = input.value.trim();
-        if (!message) return;
-
-        // Add user message to chat
-        const userMsg = document.createElement('div');
-        userMsg.className = 'chat-message user-message';
-        userMsg.textContent = message;
-        chatHistory.appendChild(userMsg);
-
-        // Clear input
-        input.value = '';
-        input.disabled = true;
-        sendButton.disabled = true;
-
-        try {
-            // Send message to server
-            const response = await sendMessage(message);
-
-            // Add assistant response to chat
-            const assistantMsg = document.createElement('div');
-            assistantMsg.className = 'chat-message assistant-message';
-            assistantMsg.textContent = response;
-            chatHistory.appendChild(assistantMsg);
-
-            // Scroll to bottom
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        } catch (error) {
-            console.error('Chat error:', error);
-            const errorMsg = document.createElement('div');
-            errorMsg.className = 'chat-message error-message';
-            errorMsg.textContent = 'Error: Could not send message';
-            chatHistory.appendChild(errorMsg);
-        }
-
-        // Re-enable input
-        input.disabled = false;
-        sendButton.disabled = false;
-        input.focus();
-    }
-
-    // Add event listeners for chat
-    sendButton.addEventListener('click', handleChatSubmit);
-    input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            handleChatSubmit();
-        }
-    });
-
-    // Clear chat functionality
-    const clearButton = modelInfo.querySelector('.clear-button');
-    clearButton.addEventListener('click', () => {
-        chatHistory.innerHTML = '';
-    });
-
-    // Close chat when clicking outside
-    chatModal.addEventListener('click', (e) => {
-        if (e.target === chatModal) {
-            chatModal.classList.remove('active');
-        }
-    });
 }); 

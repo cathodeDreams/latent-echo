@@ -1,0 +1,3 @@
+[build]
+command = ""  # If you're not using a build step
+publish = "/" 

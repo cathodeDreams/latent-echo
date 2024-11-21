@@ -1,6 +1,12 @@
 async function sendMessage(message) {
     try {
-        const response = await fetch('http://localhost:8080/chat', {
+        // Determine API endpoint based on environment
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const apiUrl = isLocalhost 
+            ? 'http://localhost:8080/chat'
+            : 'https://api.latentecho.net/chat';  // Update this to your API domain
+
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

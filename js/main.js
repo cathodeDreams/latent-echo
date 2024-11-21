@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Environment:', {
+        hostname: window.location.hostname,
+        protocol: window.location.protocol,
+        configPresent: typeof CONFIG !== 'undefined',
+        pinHash: CONFIG?.PIN_HASH?.substring(0, 8) + '...' // Log first 8 chars only
+    });
+    
     const themeToggle = document.createElement('button');
     themeToggle.className = 'theme-toggle';
     themeToggle.setAttribute('aria-label', 'Toggle dark mode');
@@ -145,6 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
             clearPin();
         });
         
+        const header = document.createElement('div');
+        header.className = 'pin-header';
+        header.textContent = 'Enter PIN';
+        
         const display = document.createElement('div');
         display.className = 'pin-display';
         for (let i = 0; i < 4; i++) {
@@ -156,29 +167,65 @@ document.addEventListener('DOMContentLoaded', () => {
         const keypad = document.createElement('div');
         keypad.className = 'pin-keypad';
         
-        // Add number keys
+        // Add number keys with touch-friendly design
         for (let i = 1; i <= 9; i++) {
-            const key = document.createElement('button');
-            key.className = 'pin-key';
-            key.textContent = i;
-            key.addEventListener('click', () => handlePinInput(i.toString()));
+            const key = createPinKey(i.toString());
             keypad.appendChild(key);
         }
         
         // Add 0 key
-        const zeroKey = document.createElement('button');
-        zeroKey.className = 'pin-key';
-        zeroKey.textContent = '0';
+        const zeroKey = createPinKey('0');
         zeroKey.style.gridColumn = '2';
-        zeroKey.addEventListener('click', () => handlePinInput('0'));
         keypad.appendChild(zeroKey);
         
+        // Add backspace key
+        const backKey = createPinKey('←', () => {
+            pinBuffer = pinBuffer.slice(0, -1);
+            updatePinDisplay();
+        });
+        backKey.style.gridColumn = '3';
+        keypad.appendChild(backKey);
+        
         container.appendChild(closeBtn);
+        container.appendChild(header);
         container.appendChild(display);
         container.appendChild(keypad);
         modal.appendChild(container);
         
         return modal;
+    }
+
+    function createPinKey(text, customHandler) {
+        const key = document.createElement('button');
+        key.className = 'pin-key';
+        key.textContent = text;
+        
+        // Prevent default touch behavior
+        key.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            key.classList.add('active');
+        });
+        
+        key.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            key.classList.remove('active');
+            if (customHandler) {
+                customHandler();
+            } else if (pinBuffer.length < 4) {
+                handlePinInput(text);
+            }
+        });
+        
+        // Keep mouse events for desktop
+        key.addEventListener('click', (e) => {
+            if (e.pointerType !== 'touch' && !customHandler) {
+                if (pinBuffer.length < 4) {
+                    handlePinInput(text);
+                }
+            }
+        });
+        
+        return key;
     }
 
     function handlePinInput(digit) {

@@ -412,6 +412,7 @@ footer {
     pointer-events: none;
     transition: opacity 0.3s ease;
     z-index: 1000;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .pin-modal.active {
@@ -424,47 +425,67 @@ footer {
     border: 1px solid var(--border-color);
     padding: var(--spacing-large);
     max-width: 90%;
-    width: 300px;
+    width: min(300px, 90vw);
     position: relative;
+    touch-action: none;
+}
+
+.pin-header {
+    text-align: center;
+    margin-bottom: 1.5em;
+    font-size: 1.1em;
+    color: var(--text-color);
 }
 
 .pin-display {
     display: flex;
-    gap: 0.5em;
+    gap: 1em;
     justify-content: center;
-    margin: 1em 0;
+    margin: 1.5em 0;
 }
 
 .pin-digit {
-    width: 1em;
+    width: 1.2em;
     height: 1.5em;
     border-bottom: 2px solid var(--border-color);
     text-align: center;
+    position: relative;
 }
 
-.pin-digit.filled {
-    border-bottom-color: var(--accent-color);
+.pin-digit.filled::after {
+    content: '•';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    color: var(--accent-color);
 }
 
 .pin-keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.5em;
-    margin-top: 1em;
+    gap: 0.8em;
+    margin-top: 1.5em;
 }
 
 .pin-key {
     background: transparent;
     border: 1px solid var(--border-color);
     color: var(--text-color);
-    padding: 0.75em;
+    padding: 1em;
     font-family: inherit;
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    min-height: 3em;
 }
 
-.pin-key:hover {
+.pin-key.active,
+.pin-key:active {
     background: var(--accent-color);
     color: var(--bg-color);
     border-color: var(--accent-color);
@@ -472,19 +493,57 @@ footer {
 
 .pin-close {
     position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+    top: 0.8em;
+    right: 0.8em;
     background: transparent;
     border: none;
     color: var(--text-color);
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 0.7;
     transition: opacity 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.pin-close:hover {
+.pin-close:hover,
+.pin-close:active {
     opacity: 1;
+}
+
+/* Error animation */
+.pin-modal.error .pin-container {
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .pin-container {
+        padding: var(--spacing-unit);
+    }
+    
+    .pin-key {
+        padding: 0.8em;
+        font-size: 1.1rem;
+    }
+    
+    .pin-display {
+        gap: 0.8em;
+    }
+    
+    .pin-digit {
+        width: 1em;
+    }
 }
 
 /* Chat Interface */

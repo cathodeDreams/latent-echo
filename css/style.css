@@ -36,15 +36,6 @@
     --logo-color: var(--shadow-mint);
 }
 
-[data-theme="light"] {
-    --bg-color: var(--light-void);
-    --text-color: var(--fungal-black);
-    --link-color: var(--dark-spore);
-    --accent-color: var(--spore-gray);
-    --border-color: var(--dark-spore);
-    --logo-color: var(--necrotic-green);
-}
-
 /* Base styles */
 body {
     background: var(--bg-color);

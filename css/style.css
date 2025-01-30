@@ -306,8 +306,8 @@ footer {
 .landing {
     position: relative;
     width: 100%;
-    height: 100vh;
-    height: 100dvh;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     overflow: hidden;
 }
 
@@ -320,8 +320,8 @@ footer {
 }
 
 .branding {
+    position: relative;
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -410,17 +410,18 @@ footer {
 }
 
 .animation-container {
-    width: min(512px, 90vmin) !important;
-    height: min(512px, 90vmin) !important;
+    width: 512px;
+    height: 512px;
+    max-width: 90vmin;
+    max-height: 90vmin;
     position: relative;
     margin: 0;
 }
 
 canvas {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
     width: 100% !important;
     height: 100% !important;
     background: transparent !important;
@@ -428,7 +429,7 @@ canvas {
 
 @media (max-width: 768px) {
     .animation-container {
-        width: 90vmin !important;
-        height: 90vmin !important;
+        width: 90vmin;
+        height: 90vmin;
     }
 }

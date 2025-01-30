@@ -309,6 +309,9 @@ footer {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    min-height: -webkit-fill-available; /* Fix for mobile Safari */
+    width: 100%;
+    position: relative;
 }
 
 .landing-content {
@@ -318,12 +321,17 @@ footer {
     justify-content: center;
     gap: var(--spacing-xl);
     padding: var(--spacing-xl) 0;
+    width: 100%;
+    position: relative;
 }
 
 .branding {
     max-width: min(80vw, 800px);
     width: 100%;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hero-logo {
@@ -406,4 +414,27 @@ footer {
     background: transparent !important;
     min-height: 50px;
     min-width: 200px;
+}
+
+.animation-container {
+    width: min(512px, 100%) !important;
+    height: min(512px, 100vw) !important;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .animation-container {
+        width: 100% !important;
+        height: 100vw !important;
+        max-height: 512px !important;
+    }
+    
+    .landing-content {
+        padding: var(--spacing-unit) 0;
+    }
 }

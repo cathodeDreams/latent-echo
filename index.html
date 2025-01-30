@@ -27,19 +27,21 @@
     <link rel="stylesheet" href="/css/style.css">
     <style>
         .animation-container {
-            width: 512px;
-            height: 512px;
+            width: min(512px, 90vmin);
+            height: min(512px, 90vmin);
             margin: 0 auto;
             display: flex;
             justify-content: center;
             align-items: center;
             background: transparent;
+            position: relative;
         }
         
         canvas {
             width: 100% !important;
             height: 100% !important;
             background: transparent !important;
+            object-fit: contain;
         }
     </style>
 </head>

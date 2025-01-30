@@ -1,101 +1,123 @@
-# Necrotic Bloom
+<h1 align="center">Necrotic Bloom</h1>
 
 ![Necrotic Bloom Color System](necroticBloom-enhanced.svg)
 
-A monochromatic color system designed for Latent Echo, emphasizing readability and accessibility.
+A biopunk color system designed for Latent Echo
 
 ## Color Architecture
 
-### Foundation Colors
-| Color Name     | Hex Code | RGB           | HSL                  | WCAG Contrast |
-|---------------|----------|---------------|----------------------|---------------|
-| Fungal Black  | `#1A1B1C` | 26, 27, 28   | 210°, 4%, 11%       | Base         |
-| Bio Lavender  | `#E6D7F3` | 230, 215, 243| 270°, 53%, 90%      | 15.8:1       |
-| Dark Lavender | `#9B87AB` | 155, 135, 171| 276°, 17%, 60%      | 7.5:1        |
-| Dark Void     | `#0D0E0E` | 13, 14, 14   | 180°, 4%, 5%        | 19.1:1       |
-| Light Void    | `#999999` | 153, 153, 153| 0°, 0%, 60%         | 4.5:1        |
-| Spore Gray    | `#9BA0A3` | 155, 160, 163| 204°, 3%, 62%       | 4.8:1        |
-| Dark Spore    | `#4D5052` | 77, 80, 82   | 204°, 3%, 31%       | 9.8:1        |
-| Shadow Mint   | `#7A9B89` | 122, 155, 137| 147°, 14%, 54%      | 5.9:1        |
-| Necrotic Green| `#4B9900` | 75, 153, 0   | 90°, 100%, 30%      | 6.2:1        |
+### Foundation Colors (Base Palette)
+| Color Name    | Hex Code | RGB           | HSL                  | Usage                |
+|--------------|----------|---------------|----------------------|----------------------|
+| Fungal Black | `#1A1B1C` | 26, 27, 28   | 210°, 4%, 11%       | Primary Text        |
+| Bio Lavender | `#E6D7F3` | 230, 215, 243| 270°, 53%, 90%      | Secondary Accent    |
+| Viral Mint   | `#C4E3D4` | 196, 227, 212| 150°, 38%, 83%      | Success States      |
+| Tissue Pink  | `#FFE5EC` | 255, 229, 236| 348°, 100%, 95%     | Warning/Error       |
+| Spore Gray   | `#9BA0A3` | 155, 160, 163| 204°, 3%, 62%       | Disabled States     |
+| Neon Moss    | `#7FFF00` | 127, 255, 0  | 90°, 100%, 50%      | Primary Action      |
 
-### Theme Mappings
+### Extended Shades - Dark Mode
+| Color Name     | 100 (Darkest) | 200        | 300        | 400 (Base)  | 500        |
+|---------------|--------------|------------|------------|-------------|------------|
+| Void          | `#000000`    | `#050606`  | `#0A0B0B`  | `#0D0E0E`   | `#1A1B1C`  |
+| Lavender      | `#2D2833`    | `#574E63`  | `#796E8B`  | `#9B87AB`   | `#BBA5CB`  |
+| Mint          | `#233029`    | `#445C50`  | `#607F6E`  | `#7A9B89`   | `#96B7A5`  |
+| Spore         | `#1A1B1C`    | `#333537`  | `#404244`  | `#4D5052`   | `#666A6D`  |
+| Moss          | `#162000`    | `#2B4700`  | `#3B6300`  | `#4B9900`   | `#5BB300`  |
+
+### Extended Shades - Light Mode
+| Color Name     | 500         | 400         | 300 (Base)  | 200         | 100 (Lightest) |
+|---------------|-------------|-------------|-------------|-------------|----------------|
+| Void          | `#999999`   | `#CCCCCC`   | `#F2F2F3`   | `#F7F7F8`   | `#FFFFFF`      |
+| Lavender      | `#D1C1E1`   | `#E3D6F0`   | `#F5EBFD`   | `#F8F2FE`   | `#FAF6FE`      |
+| Mint          | `#CFE9DC`   | `#DBF1E5`   | `#E8F5EE`   | `#F0F9F4`   | `#F5FBF8`      |
+| Spore         | `#C4C7C9`   | `#D4D7D8`   | `#E5E7E8`   | `#ECEEF0`   | `#F4F5F6`      |
+| Moss          | `#B3FF66`   | `#CCFF99`   | `#DFFFB3`   | `#E6FFCC`   | `#F2FFE6`      |
+
+### Semantic Colors
 | Purpose       | Light Mode   | Dark Mode    | Usage Context                    |
 |--------------|-------------|--------------|----------------------------------|
-| Background   | Light Void   | Dark Void    | Page background                 |
-| Text         | Fungal Black | Dark Lavender| Primary content                 |
-| Links        | Dark Spore   | Shadow Mint  | Interactive elements           |
-| Accents      | Spore Gray   | Dark Spore   | UI elements, borders           |
-| Borders      | Dark Spore   | Dark Spore   | Containers, separators         |
-| Logo         | Necrotic Green| Shadow Mint  | Branding elements              |
+| Success      | `#4B9900`   | `#7A9B89`    | Confirmations, Completion       |
+| Warning      | `#FF9900`   | `#FFB366`    | Alerts, Important Changes       |
+| Error        | `#FF3366`   | `#FF6B99`    | Critical Issues, Destructive    |
+| Info         | `#3366FF`   | `#668FFF`    | System Messages, Help           |
+| Loading      | `#9B87AB`   | `#BBA5CB`    | Progress States                 |
 
-### Animation Colors
-| Purpose       | Light Mode   | Dark Mode    | Usage Context                    |
-|--------------|-------------|--------------|----------------------------------|
-| Wireframe    | Necrotic Green| Shadow Mint  | Primary animation elements      |
-| Wireframe Pulse| Shadow Mint | Dark Spore   | Animation state transitions     |
-| Sphere       | Dark Lavender| Dark Lavender| Secondary animation elements    |
-| Sphere Pulse | Bio Lavender | Dark Spore   | Secondary state transitions     |
+### Interactive States
+| Element Type  | Default      | Hover       | Active      | Focus       | Disabled     |
+|--------------|-------------|-------------|-------------|-------------|--------------|
+| Primary      | `#7FFF00`   | `#99FF33`   | `#66CC00`   | `#B3FF66`   | `#9BA0A3`    |
+| Secondary    | `#4D5052`   | `#666A6D`   | `#333537`   | `#808487`   | `#C4C7C9`    |
+| Tertiary     | `#9B87AB`   | `#BBA5CB`   | `#796E8B`   | `#D1C1E1`   | `#E3D6F0`    |
+
+## Implementation Guidelines
+
+### Text Hierarchy
+1. **Headlines**
+   - Light: Fungal Black on Light Void
+   - Dark: Light Void on Deep Void
+2. **Body Text**
+   - Light: Fungal Black (90% opacity)
+   - Dark: Light Void (90% opacity)
+3. **Secondary Text**
+   - Light: Spore Gray 500
+   - Dark: Spore Gray 300
+
+### Component Elevation
+| Layer         | Light Mode Background | Dark Mode Background | Shadow                          |
+|--------------|---------------------|--------------------|---------------------------------|
+| Base         | Light Void 300      | Deep Void         | none                            |
+| Raised       | Light Void 200      | Void 200          | 0 2px 4px rgba(0,0,0,0.1)      |
+| Floating     | Light Void 100      | Void 300          | 0 4px 8px rgba(0,0,0,0.15)     |
+| Modal        | White               | Void 400          | 0 8px 16px rgba(0,0,0,0.2)     |
 
 ### Accessibility Guidelines
-- All text color combinations meet WCAG 2.1 Level AA standards
-- Normal text maintains 4.5:1 minimum contrast ratio
-- Large text (18pt+) maintains 3:1 minimum contrast ratio
-- Interactive elements have 3:1 minimum contrast against adjacent colors
-- Focus states use 3px solid outline with 2px offset
-- Color is never the sole indicator of state or meaning
-- High contrast mode support via forced-colors media query
+- Minimum contrast ratio: 4.5:1 for normal text, 3:1 for large text
+- Interactive elements: 3:1 contrast against adjacent colors
+- Focus states: 3px solid outline using Neon Moss
+- Error states: Always paired with icons and descriptive text
+- Color not used as sole indicator for any state
 
 ### Animation Values
-| Property     | Value | Usage                           |
-|-------------|-------|----------------------------------|
-| Opacity     | 0.3   | Base transparency for spheres    |
-| Pulse Intensity | 0.4 | Color transition intensity      |
+| Type         | Duration | Easing                | Usage                           |
+|-------------|----------|----------------------|----------------------------------|
+| Micro       | 100ms    | ease-in-out          | Button states, small transitions |
+| Standard    | 200ms    | ease-in-out          | Panel transitions, reveals       |
+| Complex     | 300ms    | cubic-bezier         | Page transitions, modals         |
 
-### Implementation Example
+## Usage Examples
+
 ```css
 :root {
-    /* Core colors */
-    --fungal-black: #1A1B1C;
-    --bio-lavender: #E6D7F3;
-    --dark-lavender: #9B87AB;
-    --dark-void: #0D0E0E;
-    --light-void: #999999;
-    --spore-gray: #9BA0A3;
-    --dark-spore: #4D5052;
-    --shadow-mint: #7A9B89;
-    --necrotic-green: #4B9900;
-    
-    /* Theme mappings */
-    --bg-color: var(--light-void);
-    --text-color: var(--fungal-black);
-    --link-color: var(--dark-spore);
-    --accent-color: var(--spore-gray);
-    --border-color: var(--dark-spore);
-    --logo-color: var(--necrotic-green);
-    
-    /* Animation colors */
-    --animation-wireframe: var(--necrotic-green);
-    --animation-wireframe-pulse: var(--shadow-mint);
-    --animation-sphere: var(--dark-lavender);
-    --animation-sphere-pulse: var(--bio-lavender);
-    --animation-opacity: 0.3;
-    --animation-pulse-intensity: 0.4;
+  /* Foundation Colors */
+  --nb-black: #1A1B1C;
+  --nb-lavender: #E6D7F3;
+  --nb-mint: #C4E3D4;
+  --nb-pink: #FFE5EC;
+  --nb-gray: #9BA0A3;
+  --nb-moss: #7FFF00;
+  
+  /* Semantic Colors */
+  --nb-success: #4B9900;
+  --nb-warning: #FF9900;
+  --nb-error: #FF3366;
+  --nb-info: #3366FF;
+  
+  /* Animation Tokens */
+  --nb-transition-micro: 100ms ease-in-out;
+  --nb-transition-standard: 200ms ease-in-out;
+  --nb-shadow-raised: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-[data-theme="dark"] {
-    --bg-color: var(--dark-void);
-    --text-color: var(--dark-lavender);
-    --link-color: var(--shadow-mint);
-    --accent-color: var(--dark-spore);
-    --border-color: var(--dark-spore);
-    --logo-color: var(--shadow-mint);
-    
-    /* Animation colors - dark mode */
-    --animation-wireframe: var(--shadow-mint);
-    --animation-wireframe-pulse: var(--dark-spore);
-    --animation-sphere: var(--dark-lavender);
-    --animation-sphere-pulse: var(--dark-spore);
+/* Dark Mode Override */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nb-black: #F2F2F3;
+    --nb-success: #7A9B89;
+    --nb-warning: #FFB366;
+    --nb-error: #FF6B99;
+    --nb-info: #668FFF;
+  }
 }
 ```
 
@@ -103,6 +125,5 @@ Created by Azul ([𝕏 @cathode_dreams](https://x.com/cathode_dreams)) for laten
 
 ## Version History
 
-- v1.2.0 - Simplified color naming, added contrast ratios, removed redundant variables
 - v1.1.0 - Added extended shades, semantic colors, and animation values
 - v1.0.0 - Initial release with foundation colors and mode support

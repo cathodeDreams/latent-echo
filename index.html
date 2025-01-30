@@ -52,14 +52,16 @@
     <script type="module">
         import { AnimationManager } from '/js/animation.js';
         
-        // Initialize landing page animation
+        // Initialize landing page animation with slower speeds
         new AnimationManager('animation-container', {
             type: 'landing',
             wireframeDetail: 1,
             sphereSegments: {
                 width: 12,
                 height: 8
-            }
+            },
+            rotationSpeed: 0.05,  // Much slower rotation
+            pulseSpeed: 0.2       // Much slower color pulsing
         });
     </script>
 </body>

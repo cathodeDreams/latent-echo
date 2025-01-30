@@ -11,10 +11,18 @@
     --necrotic-green: #4B9900;
     
     /* Animation colors */
-    --animation-primary: var(--necrotic-green);
-    --animation-primary-pulse: var(--shadow-mint);
-    --animation-secondary: var(--dark-lavender);
-    --animation-secondary-pulse: var(--bio-lavender);
+    --animation-wireframe: var(--necrotic-green);
+    --animation-wireframe-pulse: var(--shadow-mint);
+    --animation-sphere: var(--dark-lavender);
+    --animation-sphere-pulse: var(--bio-lavender);
+    --animation-opacity: 0.3;
+    --animation-pulse-intensity: 0.4;
+    
+    /* Remove old animation colors */
+    --animation-primary: var(--animation-wireframe);
+    --animation-primary-pulse: var(--animation-wireframe-pulse);
+    --animation-secondary: var(--animation-sphere);
+    --animation-secondary-pulse: var(--animation-sphere-pulse);
     
     /* Dynamic spacing */
     --spacing-unit: clamp(0.75rem, 2vw, 1rem);
@@ -41,11 +49,17 @@
     --border-color: var(--dark-spore);
     --logo-color: var(--shadow-mint);
     
-    /* Animation dark mode colors */
-    --animation-primary: var(--shadow-mint);
-    --animation-primary-pulse: var(--dark-spore);
-    --animation-secondary: var(--dark-lavender);
-    --animation-secondary-pulse: var(--dark-spore);
+    /* Animation colors - dark mode */
+    --animation-wireframe: var(--shadow-mint);
+    --animation-wireframe-pulse: var(--dark-spore);
+    --animation-sphere: var(--dark-lavender);
+    --animation-sphere-pulse: var(--dark-spore);
+    
+    /* Remove old animation colors */
+    --animation-primary: var(--animation-wireframe);
+    --animation-primary-pulse: var(--animation-wireframe-pulse);
+    --animation-secondary: var(--animation-sphere);
+    --animation-secondary-pulse: var(--animation-sphere-pulse);
 }
 
 /* Base styles */
@@ -85,9 +99,21 @@ body {
     margin-bottom: var(--spacing-large);
     width: 100%;
     max-width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.landing .nav-header {
+    position: absolute;
+    top: var(--spacing-unit);
+    right: var(--spacing-unit);
+    margin: 0;
+    z-index: 10;
 }
 
 .site-title {
+    margin-right: auto;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;

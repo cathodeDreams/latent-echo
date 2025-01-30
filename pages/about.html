@@ -48,11 +48,6 @@
             <a href="/" class="site-title">
                 <div class="header-animation" id="header-animation"></div>
             </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/pages/about.html" aria-current="page">About</a></li>
-                </ul>
-            </nav>
         </header>
 
         <main class="content" role="main">
@@ -98,7 +93,10 @@
             if (!planes.length) return;
             planes.forEach((plane, i) => {
                 const opacity = 1 - (i * 0.2);
-                plane.material.color.setStyle(getCSSColor('--animation-primary'));
+                const primaryColor = new THREE.Color(getCSSColor('--animation-primary'));
+                const primaryPulse = new THREE.Color(getCSSColor('--animation-primary-pulse'));
+                const pulseIntensity = (Math.sin(Date.now() * 0.001) + 1) * 0.5;
+                plane.material.color.copy(primaryColor).lerp(primaryPulse, pulseIntensity * 0.4);
                 plane.material.opacity = opacity;
             });
         }
@@ -163,7 +161,8 @@
                 plane.rotation.x = Math.sin(Date.now() * 0.001 * speed) * 0.1;
                 plane.rotation.y = Math.cos(Date.now() * 0.001 * speed) * 0.1;
             });
-
+            
+            updateColors();
             renderer.render(scene, camera);
         }
 

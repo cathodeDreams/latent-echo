@@ -8,10 +8,12 @@ export class AnimationManager {
         this.config = {
             wireframeDetail: config.wireframeDetail || 1,
             sphereSegments: config.sphereSegments || { width: 12, height: 8 },
-            rotationSpeed: config.type === 'landing' ? 0.15 : 0.5, // Slower for landing
-            pulseSpeed: config.type === 'landing' ? 0.5 : 1.0,    // Slower pulse for landing
+            duration: config.type === 'landing' ? 120 : 16, // 120 seconds for landing, 16 for header
             ...config
         };
+
+        // Initialize animation time
+        this.startTime = performance.now() * 0.001;
 
         // Wait for theme to be loaded before initializing
         if (document.documentElement.classList.contains('theme-loading')) {
@@ -133,7 +135,9 @@ export class AnimationManager {
     updateLandingColors() {
         if (!this.wireframe || !this.sphere) return;
         
-        const pulseIntensity = (Math.sin(performance.now() * 0.001 * this.config.pulseSpeed) + 1) * 0.5;
+        const currentTime = performance.now() * 0.001 - this.startTime;
+        const normalizedTime = (currentTime % this.config.duration) / this.config.duration;
+        const pulseIntensity = (Math.sin(normalizedTime * Math.PI * 2) + 1) * 0.5;
         const intensity = pulseIntensity * parseFloat(this.getCSSColor('--animation-pulse-intensity'));
         
         const wireframeColor = new THREE.Color(this.getCSSColor('--animation-wireframe'));
@@ -147,11 +151,14 @@ export class AnimationManager {
 
     updateHeaderColors() {
         if (!this.planes) return;
+        const currentTime = performance.now() * 0.001 - this.startTime;
+        const normalizedTime = (currentTime % this.config.duration) / this.config.duration;
+        
         this.planes.forEach((plane, i) => {
             const opacity = 1 - (i * 0.2);
             const primaryColor = new THREE.Color(this.getCSSColor('--animation-wireframe'));
             const primaryPulse = new THREE.Color(this.getCSSColor('--animation-wireframe-pulse'));
-            const pulseIntensity = (Math.sin(performance.now() * 0.001 * this.config.pulseSpeed) + 1) * 0.5;
+            const pulseIntensity = (Math.sin(normalizedTime * Math.PI * 2) + 1) * 0.5;
             plane.material.color.copy(primaryColor).lerp(primaryPulse, pulseIntensity * 0.4);
             plane.material.opacity = opacity;
         });
@@ -174,30 +181,35 @@ export class AnimationManager {
     }
 
     animateLanding(deltaTime) {
-        const time = performance.now() * 0.001 * this.config.rotationSpeed;
+        const currentTime = performance.now() * 0.001 - this.startTime;
+        const normalizedTime = (currentTime % this.config.duration) / this.config.duration;
+        const angle = normalizedTime * Math.PI * 2;
         
         if (this.wireframe) {
-            this.wireframe.rotation.x = Math.sin(time * 0.5) * Math.PI * 0.25;
-            this.wireframe.rotation.y = Math.cos(time * 0.5) * Math.PI * 0.25;
-            this.wireframe.rotation.z = Math.sin(time * 0.3) * Math.PI * 0.125;
+            this.wireframe.rotation.x = Math.sin(angle) * Math.PI * 0.25;
+            this.wireframe.rotation.y = Math.cos(angle) * Math.PI * 0.25;
+            this.wireframe.rotation.z = Math.sin(angle * 0.5) * Math.PI * 0.125;
 
-            const scale = 1 + Math.sin(time * 0.8) * 0.1;
+            const scale = 1 + Math.sin(angle * 2) * 0.1;
             this.wireframe.scale.set(scale, scale, scale);
         }
 
         if (this.sphere) {
-            this.sphere.rotation.x = -Math.sin(time * 0.4) * Math.PI * 0.25;
-            this.sphere.rotation.y = -Math.cos(time * 0.4) * Math.PI * 0.25;
+            this.sphere.rotation.x = -Math.sin(angle * 0.8) * Math.PI * 0.25;
+            this.sphere.rotation.y = -Math.cos(angle * 0.8) * Math.PI * 0.25;
         }
     }
 
     animateHeader(deltaTime) {
+        const currentTime = performance.now() * 0.001 - this.startTime;
+        const normalizedTime = (currentTime % this.config.duration) / this.config.duration;
+        
         if (!this.planes) return;
         this.planes.forEach((plane, i) => {
-            const speed = (0.5 - (i * 0.05)) * this.config.rotationSpeed;
-            plane.rotation.z += 0.01 * speed * deltaTime * 60;
-            plane.rotation.x = Math.sin(performance.now() * 0.001 * speed) * 0.1;
-            plane.rotation.y = Math.cos(performance.now() * 0.001 * speed) * 0.1;
+            const speed = 0.5 - (i * 0.05);
+            plane.rotation.z += speed * deltaTime;
+            plane.rotation.x = Math.sin(normalizedTime * Math.PI * 2 * speed) * 0.1;
+            plane.rotation.y = Math.cos(normalizedTime * Math.PI * 2 * speed) * 0.1;
         });
     }
 

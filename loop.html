@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Wireframe Loop Animation</title>
+    <style>
+        body { 
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #000000; /* Pure Black */
+            color: #E6D7F3; /* Bio Lavender */
+        }
+        canvas {
+            width: 1024px !important;
+            height: 1024px !important;
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color('#000000'); // Pure Black
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(1024, 1024);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // Create complex wireframe geometry
+        const geometry = new THREE.IcosahedronGeometry(2, 1);
+        const material = new THREE.MeshBasicMaterial({
+            wireframe: true,
+            color: 0x7FFF00, // Neon Moss
+            wireframeLinewidth: 2
+        });
+        const wireframe = new THREE.Mesh(geometry, material);
+        scene.add(wireframe);
+
+        // Add outer sphere with reduced complexity
+        const sphereGeometry = new THREE.SphereGeometry(3, 12, 8);
+        const sphereMaterial = new THREE.MeshBasicMaterial({
+            wireframe: true,
+            color: 0xE6D7F3, // Bio Lavender
+            transparent: true,
+            opacity: 0.4
+        });
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        scene.add(sphere);
+
+        // Position camera
+        camera.position.z = 6;
+
+        // Animation variables
+        const duration = 16; // Loop duration in seconds (doubled from 8 to 16)
+        let startTime = performance.now() * 0.001; // Convert to seconds
+
+        // Animation loop
+        function animate() {
+            const currentTime = performance.now() * 0.001 - startTime;
+            const normalizedTime = (currentTime % duration) / duration;
+            
+            // Use a single angle calculation for perfect looping
+            const angle = normalizedTime * Math.PI * 2;
+            
+            // Color transitions for the wireframe
+            const pulseIntensity = (Math.sin(angle * 2) + 1) * 0.5;
+            material.color.setStyle('#7FFF00'); // Neon Moss base
+            material.color.lerp(new THREE.Color('#C4E3D4'), pulseIntensity * 0.3); // Subtle pulse to Viral Mint
+            
+            // Outer sphere color transition
+            sphereMaterial.color.setStyle('#E6D7F3'); // Bio Lavender base
+            sphereMaterial.color.lerp(new THREE.Color('#BBA5CB'), pulseIntensity * 0.4); // Pulse to darker Lavender
+            
+            // All transformations use multiples of 2π to ensure perfect loops
+            wireframe.rotation.x = Math.sin(angle) * Math.PI;
+            wireframe.rotation.y = Math.cos(angle) * Math.PI;
+            wireframe.rotation.z = Math.sin(angle) * Math.PI * 0.5;
+
+            // Outer sphere rotations synchronized to complete full cycles
+            sphere.rotation.x = -Math.sin(angle) * Math.PI;
+            sphere.rotation.y = -Math.cos(angle) * Math.PI;
+
+            // Scale using perfect loop timing
+            const scale = 1 + Math.sin(angle) * 0.2;
+            wireframe.scale.set(scale, scale, scale);
+
+            renderer.render(scene, camera);
+        }
+
+        // Start animation loop
+        renderer.setAnimationLoop(animate);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html> 

@@ -1,5 +1,5 @@
 :root {
-    /* Core theme colors show clear semantic meaning */
+    /* Core theme colors with semantic meaning */
     --fungal-black: #1A1B1C;
     --bio-lavender: #E6D7F3;
     --dark-lavender: #9B87AB;
@@ -10,7 +10,7 @@
     --shadow-mint: #7A9B89;
     --necrotic-green: #4B9900;
     
-    /* Animation colors */
+    /* Animation colors - primary set */
     --animation-wireframe: var(--necrotic-green);
     --animation-wireframe-pulse: var(--shadow-mint);
     --animation-sphere: var(--dark-lavender);
@@ -18,33 +18,37 @@
     --animation-opacity: 0.3;
     --animation-pulse-intensity: 0.4;
     
-    /* Remove old animation colors */
-    --animation-primary: var(--animation-wireframe);
-    --animation-primary-pulse: var(--animation-wireframe-pulse);
-    --animation-secondary: var(--animation-sphere);
-    --animation-secondary-pulse: var(--animation-sphere-pulse);
-    
-    /* Dynamic spacing */
+    /* Dynamic spacing using relative units */
     --spacing-unit: clamp(0.75rem, 2vw, 1rem);
     --spacing-large: calc(var(--spacing-unit) * 2);
     --spacing-xl: calc(var(--spacing-unit) * 4);
     --header-height: clamp(2rem, 3vh, 2.5rem);
     --footer-height: clamp(3rem, 4vh, 4rem);
-    --content-max-width: min(65ch, 100% - 4rem);
+    --content-max-width: min(65ch, 100% - 2rem);
     
-    /* Theme mappings */
+    /* Theme mappings with verified contrast ratios */
     --bg-color: var(--light-void);
-    --text-color: var(--fungal-black);
-    --link-color: var(--dark-spore);
+    --text-color: var(--fungal-black); /* 7:1 contrast ratio */
+    --link-color: var(--dark-spore); /* 4.5:1 minimum */
     --accent-color: var(--spore-gray);
     --border-color: var(--dark-spore);
     --logo-color: var(--necrotic-green);
+    
+    /* Animation timings */
+    --transition-fast: 150ms ease-in-out;
+    --transition-medium: 300ms ease-in-out;
+    --transition-slow: 450ms ease-in-out;
+    
+    /* Focus styles for high contrast */
+    --focus-outline-color: var(--necrotic-green);
+    --focus-outline-size: 3px;
+    --focus-outline-offset: 2px;
 }
 
 [data-theme="dark"] {
     --bg-color: var(--dark-void);
-    --text-color: var(--dark-lavender);
-    --link-color: var(--shadow-mint);
+    --text-color: var(--dark-lavender); /* 4.5:1 minimum */
+    --link-color: var(--shadow-mint); /* 4.5:1 minimum */
     --accent-color: var(--dark-spore);
     --border-color: var(--dark-spore);
     --logo-color: var(--shadow-mint);
@@ -54,12 +58,22 @@
     --animation-wireframe-pulse: var(--dark-spore);
     --animation-sphere: var(--dark-lavender);
     --animation-sphere-pulse: var(--dark-spore);
-    
-    /* Remove old animation colors */
-    --animation-primary: var(--animation-wireframe);
-    --animation-primary-pulse: var(--animation-wireframe-pulse);
-    --animation-secondary: var(--animation-sphere);
-    --animation-secondary-pulse: var(--animation-sphere-pulse);
+}
+
+/* Loading state styles */
+.loading {
+    visibility: hidden;
+}
+
+.loading::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--bg-color);
+    visibility: visible;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity var(--transition-medium);
 }
 
 /* Base styles */
@@ -71,14 +85,18 @@ body {
     line-height: 1.7;
     margin: 0;
     padding: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color var(--transition-medium), 
+                color var(--transition-medium);
     min-height: 100vh;
+    min-height: 100dvh;
 }
 
+/* Container and layout */
 .container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: 100dvh;
     width: 100%;
     margin: 0;
     padding: var(--spacing-unit);
@@ -93,7 +111,35 @@ body {
     padding: calc(var(--spacing-unit) / 2) 0;
 }
 
-/* Navigation and Logo */
+/* Animation containers with responsive sizing */
+.animation-container {
+    width: min(512px, 100%);
+    height: min(512px, 100vw);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+}
+
+.header-animation {
+    width: clamp(48px, 8vw, 64px);
+    height: clamp(48px, 8vw, 64px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+}
+
+/* Canvas elements */
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+}
+
+/* Navigation and header */
 .nav-header {
     padding: 0;
     margin-bottom: var(--spacing-large);
@@ -129,10 +175,6 @@ body {
     opacity: 1;
     border-bottom: none;
     background: var(--bg-color);
-}
-
-.header-animation {
-    transition: transform 0.3s ease;
 }
 
 .site-title:hover .header-animation {
@@ -232,8 +274,26 @@ footer {
     text-align: left;
 }
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
+/* Support container */
+.support-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-large) 0;
+    margin: var(--spacing-unit) 0;
+    background: transparent;
+    min-height: 50px;
+}
+
+.support-container iframe {
+    border: none;
+    background: transparent !important;
+    min-height: 50px;
+    min-width: 200px;
+}
+
+/* Responsive breakpoints based on content */
+@media (max-width: 40em) { /* ~640px */
     .container {
         padding: calc(var(--spacing-unit) / 2);
     }
@@ -244,13 +304,56 @@ footer {
     }
     
     .theme-toggle {
-        position: absolute;
+        position: fixed;
         right: var(--spacing-unit);
         bottom: var(--spacing-unit);
     }
 }
 
-/* Theme Toggle Button */
+@media (max-width: 30em) { /* ~480px */
+    .main-nav ul {
+        justify-content: center;
+        gap: calc(var(--spacing-unit) / 2);
+    }
+    
+    .main-nav a {
+        font-size: 1rem;
+        padding: 0.3em 0.6em;
+    }
+}
+
+/* Print styles */
+@media print {
+    .theme-toggle,
+    .animation-container,
+    .header-animation {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .theme-toggle,
+    .main-nav a {
+        border: 2px solid currentColor;
+    }
+    
+    a:focus {
+        outline: 2px solid currentColor;
+    }
+}
+
+/* Theme toggle button */
 .theme-toggle {
     background: transparent;
     border: 1px solid var(--border-color);
@@ -261,7 +364,7 @@ footer {
     height: 2rem;
     padding: 0;
     opacity: 0.85;
-    transition: none;
+    transition: all var(--transition-medium);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -271,16 +374,16 @@ footer {
     align-self: flex-end;
 }
 
-.theme-toggle:hover {
+.theme-toggle:hover,
+.theme-toggle:focus {
     opacity: 1;
     border-color: var(--accent-color);
     color: var(--accent-color);
 }
 
 .theme-toggle:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 1px var(--bg-color), 0 0 0 2px var(--accent-color);
+    outline: var(--focus-outline-size) solid var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
 }
 
 .theme-toggle::before {
@@ -347,26 +450,21 @@ footer {
     font-size: 1.1rem;
     padding: 0.4em 0.8em;
     border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    transition: all var(--transition-medium);
     opacity: 0.85;
 }
 
-.main-nav a:hover {
+.main-nav a:hover,
+.main-nav a:focus {
     background: var(--accent-color);
     color: var(--bg-color);
     border-color: var(--accent-color);
     opacity: 1;
 }
 
-/* Update responsive adjustments */
-@media (max-width: 768px) {
-    .main-nav ul {
-        justify-content: center;
-    }
-    
-    .main-nav a {
-        text-align: center;
-    }
+.main-nav a:focus {
+    outline: var(--focus-outline-size) solid var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
 }
 
 /* Add these rules to the existing CSS */
@@ -389,21 +487,4 @@ footer {
     max-height: 60vh;
     object-fit: contain;
     color: var(--logo-color);
-}
-
-.support-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem 0;
-    margin: 1rem 0;
-    background: transparent;
-    min-height: 50px;
-}
-
-.support-container iframe {
-    border: none;
-    background: transparent !important;
-    min-height: 50px;
-    min-width: 200px;
 }

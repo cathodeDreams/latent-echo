@@ -96,11 +96,21 @@ body {
     border-bottom: none;
     opacity: 0.85;
     transition: opacity 0.3s ease;
+    padding: 0.5rem;
 }
 
 .site-title:hover {
     opacity: 1;
     border-bottom: none;
+    background: var(--bg-color);
+}
+
+.header-animation {
+    transition: transform 0.3s ease;
+}
+
+.site-title:hover .header-animation {
+    transform: scale(1.1);
 }
 
 .nav-logo {
@@ -304,33 +314,32 @@ footer {
     padding: 0;
     margin: 0;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .main-nav a {
-    font-size: 1.2rem;
-    padding: 0.5em 1em;
+    font-size: 1.1rem;
+    padding: 0.4em 0.8em;
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
+    opacity: 0.85;
 }
 
 .main-nav a:hover {
     background: var(--accent-color);
     color: var(--bg-color);
     border-color: var(--accent-color);
+    opacity: 1;
 }
 
-/* Responsive adjustments */
+/* Update responsive adjustments */
 @media (max-width: 768px) {
     .main-nav ul {
-        flex-direction: column;
-        align-items: center;
+        justify-content: center;
     }
     
     .main-nav a {
-        width: 200px;
         text-align: center;
-        display: block;
     }
 }
 

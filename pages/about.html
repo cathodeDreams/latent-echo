@@ -25,19 +25,31 @@
     <meta name="msapplication-TileColor" content="#0D0E0E">
     
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .header-animation {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+        }
+        
+        .header-animation canvas {
+            width: 100% !important;
+            height: 100% !important;
+            background: transparent !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header class="nav-header">
             <a href="/" class="site-title">
-                <img src="/img/logo.svg" alt="" class="nav-logo" aria-hidden="true">
-                <h1 class="nav-title">Latent Echo</h1>
+                <div class="header-animation" id="header-animation"></div>
             </a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#" class="inactive">Gallery</a></li>
-                    <li><a href="#" class="inactive">Wiki</a></li>
-                    <li><a href="#" class="inactive">Forum</a></li>
                     <li><a href="/pages/about.html" aria-current="page">About</a></li>
                 </ul>
             </nav>
@@ -47,31 +59,7 @@
             <div class="terminal-container">
                 <div class="terminal-frame">
                     <div class="section prose__section">
-                        The internet is being optimized into irrelevance. Every platform and
-                        creative tool follows the same path: birth, promise, corruption,
-                        extraction. The AI boom that has occurred over the past two years has
-                        made this exceedingly worse. There is a strange sense of time dilation
-                        online. Everything moves faster while going nowhere. Models improve,
-                        techniques evolve, and capabilities expand exponentially.
-                    </div>
-                    
-                    <div class="section prose__section">
-                        I miss and long greatly for the communities I was raised in. Weird
-                        spaces that followed no rules except their users' obsessions. In the
-                        process of the internet maturing, becoming acceptable to those who were
-                        initially only tourists, we've lost that magic to algorithms, metrics
-                        and engagement scores. The current paradigm is psychological
-                        exploitation running on dopamine loops. Every creative act must be
-                        instantly performed, measured, validated. We've built systems that turn
-                        imagination into anxiety, dreams into constant nightmare.
-                    </div>
-
-                    <div class="section prose__section">
-                        Real communities have always formed in the spaces between algorithms. Small groups finding each other through shared interests, growing organically, splitting up and dying when they need to. Forced scale and widespread appeasement kills depth and meaning, replacing genuine connection with metrics.
-                    </div>
-
-                    <div class="section prose__section">
-                        I want something more, and it seems like many others do too. Latent Echo will be my attempt at creating such a space. I hope to share more soon.
+                        Latent Echo is a personal space for exploring the intersection of artificial and human intelligence through art, technology, and critical examination. The work presented here will be unpolished or technically imperfect. Developed and maintained by Azul (𝕏 @cathode_dreams), an artist working with generative systems such as Stable Diffusion, Midjourney and various language models.
                     </div>
                 </div>
             </div>
@@ -95,6 +83,111 @@
             </div>
         </footer>
     </div>
+
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+        let scene, camera, renderer, planes = [];
+        const container = document.getElementById('header-animation');
+
+        function getCSSColor(variable) {
+            return getComputedStyle(document.documentElement).getPropertyValue(variable).trim();
+        }
+
+        function updateColors() {
+            if (!planes.length) return;
+            planes.forEach((plane, i) => {
+                const opacity = 1 - (i * 0.2);
+                plane.material.color.setStyle(getCSSColor('--animation-primary'));
+                plane.material.opacity = opacity;
+            });
+        }
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = null;
+            
+            const aspect = container.clientWidth / container.clientHeight;
+            camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 1000);
+            
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true,
+                alpha: true
+            });
+            renderer.setClearColor(0x000000, 0);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Create stacked planes
+            const planeGeometry = new THREE.PlaneGeometry(2, 2);
+            const spacing = 0.2;
+            
+            for (let i = 0; i < 5; i++) {
+                const material = new THREE.MeshBasicMaterial({
+                    wireframe: true,
+                    color: getCSSColor('--animation-primary'),
+                    transparent: true,
+                    opacity: 1 - (i * 0.2)
+                });
+                const plane = new THREE.Mesh(planeGeometry, material);
+                plane.position.z = -i * spacing;
+                plane.rotation.x = Math.PI * 0.1;
+                plane.rotation.y = Math.PI * 0.1;
+                planes.push(plane);
+                scene.add(plane);
+            }
+
+            camera.position.z = 4;
+
+            renderer.setAnimationLoop(animate);
+            
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'data-theme') {
+                        updateColors();
+                    }
+                });
+            });
+            
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['data-theme']
+            });
+        }
+
+        function animate() {
+            planes.forEach((plane, i) => {
+                const speed = 0.5 - (i * 0.05);
+                plane.rotation.z += 0.01 * speed;
+                plane.rotation.x = Math.sin(Date.now() * 0.001 * speed) * 0.1;
+                plane.rotation.y = Math.cos(Date.now() * 0.001 * speed) * 0.1;
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        function handleResize() {
+            if (!camera || !renderer || !container) return;
+            
+            const newWidth = container.clientWidth;
+            const newHeight = container.clientHeight;
+            
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(newWidth, newHeight);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        window.addEventListener('resize', handleResize);
+        const resizeObserver = new ResizeObserver(handleResize);
+        resizeObserver.observe(container);
+    </script>
 
     <script src="/js/main.js"></script>
 </body>

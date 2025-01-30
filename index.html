@@ -76,46 +76,54 @@
     <script type="module">
         import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 
-        // Scene setup
-        const scene = new THREE.Scene();
-        scene.background = null; // Make background transparent
-        
+        let scene, camera, renderer, wireframe, sphere;
         const container = document.getElementById('animation-container');
-        const aspect = container.clientWidth / container.clientHeight;
-        const camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-        
-        const renderer = new THREE.WebGLRenderer({ 
-            antialias: true,
-            alpha: true // Enable transparency
-        });
-        renderer.setClearColor(0x000000, 0); // Set clear color to transparent
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        container.appendChild(renderer.domElement);
 
-        // Create complex wireframe geometry
-        const geometry = new THREE.IcosahedronGeometry(2, 1);
-        const material = new THREE.MeshBasicMaterial({
-            wireframe: true,
-            color: 0x7FFF00,
-            wireframeLinewidth: 2
-        });
-        const wireframe = new THREE.Mesh(geometry, material);
-        scene.add(wireframe);
+        // Initialize the animation once the DOM is fully loaded
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.background = null;
+            
+            const aspect = container.clientWidth / container.clientHeight;
+            camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+            
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true,
+                alpha: true
+            });
+            renderer.setClearColor(0x000000, 0);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
 
-        // Add outer sphere with reduced complexity
-        const sphereGeometry = new THREE.SphereGeometry(3, 12, 8);
-        const sphereMaterial = new THREE.MeshBasicMaterial({
-            wireframe: true,
-            color: 0xE6D7F3,
-            transparent: true,
-            opacity: 0.4
-        });
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        scene.add(sphere);
+            // Create complex wireframe geometry
+            const geometry = new THREE.IcosahedronGeometry(2, 1);
+            const material = new THREE.MeshBasicMaterial({
+                wireframe: true,
+                color: 0x7FFF00,
+                wireframeLinewidth: 2
+            });
+            wireframe = new THREE.Mesh(geometry, material);
+            scene.add(wireframe);
 
-        // Position camera
-        camera.position.z = 6;
+            // Add outer sphere with reduced complexity
+            const sphereGeometry = new THREE.SphereGeometry(3, 12, 8);
+            const sphereMaterial = new THREE.MeshBasicMaterial({
+                wireframe: true,
+                color: 0xE6D7F3,
+                transparent: true,
+                opacity: 0.4
+            });
+            sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            scene.add(sphere);
+
+            // Position camera
+            camera.position.z = 6;
+
+            // Start animation loop
+            renderer.setAnimationLoop(animate);
+        }
 
         // Animation variables
         const duration = 16;
@@ -130,12 +138,12 @@
             
             // Color transitions for the wireframe
             const pulseIntensity = (Math.sin(angle * 2) + 1) * 0.5;
-            material.color.setStyle('#7FFF00');
-            material.color.lerp(new THREE.Color('#C4E3D4'), pulseIntensity * 0.3);
+            wireframe.material.color.setStyle('#7FFF00');
+            wireframe.material.color.lerp(new THREE.Color('#C4E3D4'), pulseIntensity * 0.3);
             
             // Outer sphere color transition
-            sphereMaterial.color.setStyle('#E6D7F3');
-            sphereMaterial.color.lerp(new THREE.Color('#BBA5CB'), pulseIntensity * 0.4);
+            sphere.material.color.setStyle('#E6D7F3');
+            sphere.material.color.lerp(new THREE.Color('#BBA5CB'), pulseIntensity * 0.4);
             
             wireframe.rotation.x = Math.sin(angle) * Math.PI;
             wireframe.rotation.y = Math.cos(angle) * Math.PI;
@@ -150,17 +158,31 @@
             renderer.render(scene, camera);
         }
 
-        // Start animation loop
-        renderer.setAnimationLoop(animate);
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
+        // Handle window and container resize
+        function handleResize() {
+            if (!camera || !renderer || !container) return;
+            
             const newWidth = container.clientWidth;
             const newHeight = container.clientHeight;
+            
             camera.aspect = newWidth / newHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(newWidth, newHeight);
-        });
+        }
+
+        // Initialize after DOM content is loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Set up resize observers
+        window.addEventListener('resize', handleResize);
+        
+        // Use ResizeObserver to watch container size changes
+        const resizeObserver = new ResizeObserver(handleResize);
+        resizeObserver.observe(container);
     </script>
 
     <script src="/js/config.js"></script>

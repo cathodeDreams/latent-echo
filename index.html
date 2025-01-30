@@ -25,6 +25,23 @@
     <meta name="msapplication-TileColor" content="#0D0E0E">
     
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .animation-container {
+            width: 512px;
+            height: 512px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+        }
+        
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+            background: transparent !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container landing">
@@ -38,9 +55,7 @@
         
         <main class="content landing-content" role="main">
             <div class="branding">
-                <div class="animation-container" id="animation-container">
-                    <canvas></canvas>
-                </div>
+                <div class="animation-container" id="animation-container"></div>
             </div>
         </main>
 
@@ -178,9 +193,15 @@
             const newWidth = container.clientWidth;
             const newHeight = container.clientHeight;
             
-            camera.aspect = newWidth / newHeight;
+            // Ensure aspect ratio is maintained
+            const size = Math.min(newWidth, newHeight);
+            
+            camera.aspect = 1; // Keep aspect ratio square
             camera.updateProjectionMatrix();
-            renderer.setSize(newWidth, newHeight);
+            renderer.setSize(size, size, false);
+            
+            // Update pixel ratio on resize for better mobile display
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         }
 
         // Initialize after DOM content is loaded
@@ -192,9 +213,12 @@
 
         // Set up resize observers
         window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', handleResize);
         
         // Use ResizeObserver to watch container size changes
-        const resizeObserver = new ResizeObserver(handleResize);
+        const resizeObserver = new ResizeObserver(() => {
+            requestAnimationFrame(handleResize);
+        });
         resizeObserver.observe(container);
     </script>
 

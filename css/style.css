@@ -73,6 +73,8 @@ body {
     padding: 0;
     transition: background-color 0.3s ease, color 0.3s ease;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .container {
@@ -81,8 +83,9 @@ body {
     min-height: 100vh;
     width: 100%;
     margin: 0;
-    padding: var(--spacing-unit);
+    padding: 0; /* Remove padding that might cause scrolling */
     box-sizing: border-box;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .content {
@@ -95,13 +98,13 @@ body {
 
 /* Navigation and Logo */
 .nav-header {
+    position: absolute;
+    top: var(--spacing-unit);
+    right: var(--spacing-unit);
+    width: auto;
     padding: 0;
-    margin-bottom: var(--spacing-large);
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    margin: 0;
+    z-index: 10;
 }
 
 .landing .nav-header {
@@ -212,9 +215,11 @@ a:hover {
 /* Footer */
 footer {
     width: 100%;
-    padding: calc(var(--spacing-unit) / 2) 0;
-    border-top: 1px solid var(--accent-color);
-    margin-top: auto;
+    padding: var(--spacing-unit);
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .footer-content {
@@ -235,18 +240,32 @@ footer {
 /* Mobile adjustments */
 @media (max-width: 768px) {
     .container {
-        padding: calc(var(--spacing-unit) / 2);
+        padding: 0;
     }
     
-    .footer-content {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .theme-toggle {
+    .nav-header {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: var(--spacing-unit);
+        box-sizing: border-box;
         position: absolute;
-        right: var(--spacing-unit);
-        bottom: var(--spacing-unit);
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .main-nav {
+        width: 100%;
+    }
+    
+    .main-nav ul {
+        justify-content: center;
+    }
+    
+    .animation-container {
+        width: min(512px, 85vmin);
+        height: min(512px, 85vmin);
     }
 }
 
@@ -309,10 +328,10 @@ footer {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /* Fix for mobile Safari */
-    min-height: -webkit-fill-available;
+    width: 100%;
     position: relative;
     overflow: hidden;
+    padding: 0; /* Remove padding that might cause scrolling */
 }
 
 .landing-content {
@@ -320,24 +339,19 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-xl);
-    padding: var(--spacing-xl) 0;
     width: 100%;
-    /* Fix for mobile Safari */
     height: 100vh;
-    height: -webkit-fill-available;
+    padding: 0; /* Remove padding that might cause scrolling */
+    position: relative;
 }
 
 .branding {
-    max-width: min(80vw, 800px);
     width: 100%;
-    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Fix for mobile Safari */
-    height: 100%;
-    min-height: 300px;
+    padding: 0 var(--spacing-unit);
+    box-sizing: border-box;
 }
 
 .hero-logo {
@@ -348,13 +362,8 @@ footer {
 }
 
 .main-nav ul {
-    display: flex;
-    gap: var(--spacing-large);
-    list-style: none;
-    padding: 0;
     margin: 0;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    padding: 0;
 }
 
 .main-nav a {
@@ -436,17 +445,14 @@ footer {
 }
 
 .animation-container {
-    width: 512px;
-    height: 512px;
+    width: min(512px, 90vmin);
+    height: min(512px, 90vmin);
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
     background: transparent;
-    /* Fix for mobile Safari */
-    max-width: 100%;
-    max-height: 100vmin;
-    aspect-ratio: 1/1;
+    position: relative;
 }
 
 canvas {
@@ -461,8 +467,12 @@ canvas {
 
 /* iOS Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+    
     .landing {
-        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
     }
     
     .landing-content {

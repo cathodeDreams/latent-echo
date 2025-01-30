@@ -10,6 +10,12 @@
     --shadow-mint: #7A9B89;
     --necrotic-green: #4B9900;
     
+    /* Animation colors */
+    --animation-primary: var(--necrotic-green);
+    --animation-primary-pulse: var(--shadow-mint);
+    --animation-secondary: var(--dark-lavender);
+    --animation-secondary-pulse: var(--bio-lavender);
+    
     /* Dynamic spacing */
     --spacing-unit: clamp(0.75rem, 2vw, 1rem);
     --spacing-large: calc(var(--spacing-unit) * 2);
@@ -34,6 +40,12 @@
     --accent-color: var(--dark-spore);
     --border-color: var(--dark-spore);
     --logo-color: var(--shadow-mint);
+    
+    /* Animation dark mode colors */
+    --animation-primary: var(--shadow-mint);
+    --animation-primary-pulse: var(--dark-spore);
+    --animation-secondary: var(--dark-lavender);
+    --animation-secondary-pulse: var(--dark-spore);
 }
 
 /* Base styles */

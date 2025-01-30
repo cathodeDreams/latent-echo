@@ -2,7 +2,7 @@
 const ThemeManager = {
     init() {
         // Add loading class immediately
-        document.documentElement.classList.add('loading');
+        document.documentElement.classList.add('theme-loading');
         
         // Apply initial theme with fallback
         const theme = localStorage.getItem('theme') || 
@@ -12,12 +12,16 @@ const ThemeManager = {
         
         // Setup theme toggle once DOM is ready
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.setupToggle());
+            document.addEventListener('DOMContentLoaded', () => {
+                this.setupToggle();
+                this.removeLoading();
+            });
         } else {
             this.setupToggle();
+            this.removeLoading();
         }
 
-        // Remove loading class after a maximum timeout
+        // Fallback timeout to ensure loading state is removed
         setTimeout(() => this.removeLoading(), 1000);
     },
 
@@ -27,7 +31,11 @@ const ThemeManager = {
     },
 
     removeLoading() {
-        document.documentElement.classList.remove('loading');
+        // Only remove if it hasn't been removed yet
+        if (document.documentElement.classList.contains('theme-loading')) {
+            document.documentElement.classList.remove('theme-loading');
+            document.documentElement.classList.add('theme-loaded');
+        }
     },
 
     setupToggle() {

@@ -61,11 +61,11 @@
 }
 
 /* Loading state styles */
-.loading {
+.theme-loading {
     visibility: hidden;
 }
 
-.loading::before {
+.theme-loading::before {
     content: '';
     position: fixed;
     inset: 0;
@@ -74,6 +74,20 @@
     z-index: 9999;
     opacity: 1;
     transition: opacity var(--transition-medium);
+}
+
+.theme-loaded {
+    visibility: visible;
+    animation: fadeIn var(--transition-medium);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Base styles */

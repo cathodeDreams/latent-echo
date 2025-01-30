@@ -11,7 +11,22 @@ export class AnimationManager {
             ...config
         };
 
-        this.init();
+        // Wait for theme to be loaded before initializing
+        if (document.documentElement.classList.contains('theme-loading')) {
+            const observer = new MutationObserver((mutations) => {
+                if (document.documentElement.classList.contains('theme-loaded')) {
+                    observer.disconnect();
+                    this.init();
+                }
+            });
+            
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        } else {
+            this.init();
+        }
     }
 
     init() {

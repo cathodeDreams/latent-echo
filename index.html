@@ -101,7 +101,7 @@
             const geometry = new THREE.IcosahedronGeometry(2, 1);
             const material = new THREE.MeshBasicMaterial({
                 wireframe: true,
-                color: 0x7FFF00,
+                color: 0x4B9900, // Necrotic Green (darker moss)
                 wireframeLinewidth: 2
             });
             wireframe = new THREE.Mesh(geometry, material);
@@ -111,9 +111,9 @@
             const sphereGeometry = new THREE.SphereGeometry(3, 12, 8);
             const sphereMaterial = new THREE.MeshBasicMaterial({
                 wireframe: true,
-                color: 0xE6D7F3,
+                color: 0x9B87AB, // Dark Lavender base
                 transparent: true,
-                opacity: 0.4
+                opacity: 0.3
             });
             sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
             scene.add(sphere);
@@ -136,14 +136,14 @@
             
             const angle = normalizedTime * Math.PI * 2;
             
-            // Color transitions for the wireframe
+            // Color transitions for the wireframe using Necrotic Bloom colors
             const pulseIntensity = (Math.sin(angle * 2) + 1) * 0.5;
-            wireframe.material.color.setStyle('#7FFF00');
-            wireframe.material.color.lerp(new THREE.Color('#C4E3D4'), pulseIntensity * 0.3);
+            wireframe.material.color.setStyle('#4B9900'); // Necrotic Green base
+            wireframe.material.color.lerp(new THREE.Color('#7A9B89'), pulseIntensity * 0.4); // Shadow Mint
             
             // Outer sphere color transition
-            sphere.material.color.setStyle('#E6D7F3');
-            sphere.material.color.lerp(new THREE.Color('#BBA5CB'), pulseIntensity * 0.4);
+            sphere.material.color.setStyle('#9B87AB'); // Dark Lavender base
+            sphere.material.color.lerp(new THREE.Color('#796E8B'), pulseIntensity * 0.4); // Lavender 300
             
             wireframe.rotation.x = Math.sin(angle) * Math.PI;
             wireframe.rotation.y = Math.cos(angle) * Math.PI;

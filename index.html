@@ -27,12 +27,16 @@
     <link rel="stylesheet" href="/css/style.css">
     <style>
         .animation-container {
-            position: relative;
+            position: absolute;
             width: min(75vh, 75vw, 800px);
             height: min(75vh, 75vw, 800px);
-            display: grid;
-            place-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background: transparent;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
         
         canvas {

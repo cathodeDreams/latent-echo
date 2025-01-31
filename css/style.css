@@ -310,6 +310,13 @@ footer {
     min-height: -webkit-fill-available;
     position: relative;
     overflow: hidden;
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
 }
 
 .landing-content {
@@ -319,6 +326,8 @@ footer {
     align-items: center;
     position: relative;
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .branding {
@@ -369,19 +378,11 @@ footer {
 
 /* Update responsive adjustments */
 @media (max-width: 768px) {
-    .main-nav ul {
-        justify-content: center;
-    }
-    
-    .main-nav a {
-        text-align: center;
-    }
-    
-    .landing-content {
+    .container.landing {
         padding: 0;
     }
     
-    .branding {
+    .landing-content {
         padding: 0;
     }
     
@@ -439,15 +440,15 @@ footer {
 }
 
 .animation-container {
+    position: absolute;
     width: min(75vh, 75vw, 800px);
     height: min(75vh, 75vw, 800px);
     display: flex;
     justify-content: center;
     align-items: center;
     background: transparent;
-    position: absolute;
-    top: 50%;
     left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
 }
 

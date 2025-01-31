@@ -302,6 +302,15 @@ footer {
     outline-offset: 2px;
 }
 
+/* Reset container padding for landing page */
+.container.landing {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
 /* Landing page specific styles */
 .landing {
     display: flex;
@@ -309,25 +318,14 @@ footer {
     min-height: 100vh;
     min-height: -webkit-fill-available;
     position: relative;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    width: 100vw;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
 }
 
 .landing-content {
     flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
     width: 100%;
-    margin: 0;
-    padding: 0;
+    display: grid;
+    place-items: center;
 }
 
 .branding {
@@ -376,23 +374,14 @@ footer {
     opacity: 1;
 }
 
-/* Update responsive adjustments */
+/* Mobile adjustments */
 @media (max-width: 768px) {
-    .container.landing {
-        padding: 0;
-    }
-    
-    .landing-content {
-        padding: 0;
-    }
-    
     .animation-container {
         width: min(90vmin, 512px);
         height: min(90vmin, 512px);
     }
 }
 
-/* Small height adjustments */
 @media (max-height: 600px) {
     .animation-container {
         width: min(80vmin, 512px);
@@ -440,16 +429,12 @@ footer {
 }
 
 .animation-container {
-    position: absolute;
+    position: relative;
     width: min(75vh, 75vw, 800px);
     height: min(75vh, 75vw, 800px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    place-items: center;
     background: transparent;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
 
 canvas {
@@ -469,9 +454,5 @@ canvas {
     
     .landing-content {
         min-height: -webkit-fill-available;
-    }
-    
-    .animation-container {
-        transform: translate(-50%, -50%) translateZ(0);
     }
 }

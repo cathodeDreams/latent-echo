@@ -463,3 +463,39 @@ canvas {
         min-height: -webkit-fill-available;
     }
 }
+
+/* Additional Mobile Adjustments for About and other pages */
+@media (max-width: 768px) {
+    /* Force non-landing containers to fit the viewport */
+    .container:not(.landing) {
+        height: 100vh;
+        overflow: hidden;
+    }
+    /* Ensure main content area doesn't scroll */
+    .content {
+        flex: 1;
+        overflow: hidden;
+    }
+    /* Adjust terminal-frame to scale its content and prevent overflow */
+    .terminal-frame {
+        max-height: calc(100vh - var(--header-height) - var(--footer-height) - 2rem);
+        overflow: hidden;
+        font-size: 0.9rem;
+    }
+    /* Adjust support container spacing */
+    .support-container {
+        padding: 1rem 0;
+        margin: 1rem 0;
+    }
+    /* Adjust main navigation links for mobile */
+    .main-nav a {
+        padding: 0.3em 0.6em;
+        font-size: 0.9rem;
+    }
+    /* Adjust theme-toggle button size for mobile */
+    .theme-toggle {
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 0.9rem;
+    }
+}
